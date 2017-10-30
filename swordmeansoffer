@@ -1,0 +1,45 @@
+public class Problem49 {
+
+	public static void main(String[] args) {
+//		System.out.println(convert("032"));
+		System.out.println('0'+1);
+	
+	}
+	
+	public static boolean isValid(char[] chas){
+		if(chas[0]!='-'&&(chas[0]<'0'||chas[0]>'9')){
+			return false;
+		}
+		if(chas[0]=='-'&&(chas.length==1||chas[1]=='0')){
+			return false;
+		}
+		if(chas[0]=='0'&&chas.length>1){
+			return false;
+		}
+		for(int i=1;i<chas.length;i++){
+			if(chas[i]<'0'||chas[i]>'9'){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static int convert(String str){
+		if(str==null||str.equals("")){
+			throw new RuntimeException("字符串长度为0或字符串为null");
+		}
+		char[] chas =str.toCharArray();
+		if(!isValid(chas)){
+			throw new RuntimeException("字符串输入不合法！");
+		}
+		boolean posi = chas[0]=='-'?false:true;
+		long res =0;
+		for(int i=posi?0:1;i<chas.length;i++){
+			res = res*10+(chas[i]-'0');
+		}
+		if((!posi&&res*-1<Integer.MIN_VALUE)||(posi&&(res>Integer.MAX_VALUE))){
+			throw new RuntimeException("溢出！");
+		}
+		return (int) (posi?res:res*-1);
+	}
+}
